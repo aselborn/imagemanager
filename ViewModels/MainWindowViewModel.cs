@@ -28,7 +28,8 @@ namespace Imagemanager.ViewModels
 
             ComputerFolders = new List<Folder>()
             {
-                new Folder(@"C:\")
+                new Folder(@"C:\"),
+                new Folder(@"D:\")
             };
 
             //ComputerDirectories = DataApi.GetFolders(@"c:\");

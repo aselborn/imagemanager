@@ -14,6 +14,11 @@
         <VM:MainWindowViewModel />
     </Window.DataContext>
 
+    <Window.Resources>
+        <m:DatabindingDebugConverter x:Key="debugConverter" />
+    </Window.Resources>
+
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
@@ -23,7 +28,7 @@
         <StackPanel  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
 
             <!--<TreeView x:Name="trFolders" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                      Margin="5,5" ItemsSource="{Binding Departments}" Height="500">
+                      Margin="5,5" ItemsSource="{Binding Departments, Converter={StaticResource debugConverter}}" Height="500">
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Positions}" DataType="{x:Type m:Department}">
                         <Label Content="{Binding DepartmentName}" />
@@ -47,9 +52,10 @@
             <TreeView x:Name="trFolders" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                       Margin="5,5" ItemsSource="{Binding ComputerFolders}"  Height="520">
 
+              
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding SubFolders}" DataType="{x:Type m:Folder}">
-                        <Label Content="{Binding Name}" />
+                    <HierarchicalDataTemplate ItemsSource="{Binding FolderInformations, Converter={StaticResource debugConverter}}" DataType="{x:Type m:Folder}">
+                        <Label Content="{Binding FolderName}" />
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
 
