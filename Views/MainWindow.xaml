@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Imagemanager"
         mc:Ignorable="d"
+        xmlns:wv="clr-namespace:Imagemanager.Views"
         xmlns:VM="clr-namespace:Imagemanager.ViewModels"
         xmlns:m="clr-namespace:Imagemanager.Models"
+        
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="600" Width="500">
+        Title="MainWindow" Height="550" Width="600">
 
     <Window.DataContext>
-        <VM:MainWindowViewModel />
+        <VM:MainWindowViewModel x:Name="MainWindowViewModel"/>
     </Window.DataContext>
 
     <Window.Resources>
@@ -19,15 +21,28 @@
     </Window.Resources>
 
 
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
 
-            <!--<TreeView x:Name="trFolders" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="5" Orientation="Horizontal">
+            <Label Content="Selected Path: " FontSize="12"/>
+            <TextBlock FontSize="12" Padding="5" Text="{Binding SelectedPath}"/>
+        </StackPanel>
+
+        <wv:MyTreeview Grid.Row="1" DataContext="{Binding SingleTree}" ></wv:MyTreeview>
+
+
+        <!--<TreeView x:Name="trFolders" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                       Margin="5,5" ItemsSource="{Binding Departments, Converter={StaticResource debugConverter}}" Height="500">
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Positions}" DataType="{x:Type m:Department}">
@@ -49,24 +64,24 @@
                 </TreeView.ItemTemplate>
             </TreeView>-->
 
-            <TreeView x:Name="trFolders" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                      Margin="5,5" ItemsSource="{Binding ComputerFolders}"  Height="520">
+        <!--<TreeView x:Name="trFolders" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                      Margin="5,5" ItemsSource="{Binding ComputerFolders}"   Height="520">
 
-              
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding FolderInformations, Converter={StaticResource debugConverter}}" DataType="{x:Type m:Folder}">
-                        <Label Content="{Binding FolderName}" />
+                    <HierarchicalDataTemplate 
+                        ItemsSource="{Binding FolderInformations, Converter={StaticResource debugConverter}}" 
+                        DataType="{x:Type m:Folder}">
+                        <Label Content="{Binding FolderName}"   />
+                        
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
 
-            </TreeView>
-            
-            
-        </StackPanel>
+            </TreeView>-->
 
-        <StackPanel Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <TextBlock Text="hej"></TextBlock>
-            <TextBlock Text="hej"></TextBlock>
-        </StackPanel>
+
     </Grid>
+
+
+
+
 </Window>

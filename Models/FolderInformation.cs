@@ -22,6 +22,17 @@ namespace Imagemanager.Models
             }
         }
 
+        private string _shortName;
+        public string ShortName
+        {
+            get => _shortName;
+            set
+            {
+                _shortName = value;
+                NotifyPropertyChanged(nameof(ShortName));
+            }
+        }
+
         private DirectoryInfo _subFolders;
         public DirectoryInfo SubFolders
         {
@@ -29,6 +40,7 @@ namespace Imagemanager.Models
             set
             {
                 _subFolders = value;
+                ShortName = value.Name;
                 NotifyPropertyChanged(nameof(SubFolders));
             }
         }

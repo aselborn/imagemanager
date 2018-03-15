@@ -24,7 +24,8 @@ namespace Imagemanager.Models
             
             foreach(string str in foldersAsStrings)
             {
-                FolderInformation finfo = new FolderInformation() { FolderName = str, SubFolders = new DirectoryInfo(str) };
+                DirectoryInfo dir = new DirectoryInfo(str);
+                FolderInformation finfo = new FolderInformation() { FolderName = dir.Name, SubFolders = dir };
                 folderInformations.Add(finfo);
             }
             //foreach(string str in foldersAsStrings)

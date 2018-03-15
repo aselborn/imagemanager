@@ -13,12 +13,12 @@ namespace Imagemanager.ViewModels
         private List<Department> departments;
         private List<Folder> computerFolders;
 
-        //public ObservableCollection<Folder> ComputerDirectories { get; } = new ObservableCollection<Folder>();
         
+        public NavigationTree SingleTree { get; set; }
 
         public MainWindowViewModel()
         {
-            
+            /*
             Departments = new List<Department>()
             {
                 new Department("DotNet"),
@@ -31,9 +31,11 @@ namespace Imagemanager.ViewModels
                 new Folder(@"C:\"),
                 new Folder(@"D:\")
             };
-
+            */
             //ComputerDirectories = DataApi.GetFolders(@"c:\");
-            
+
+
+            SingleTree = new NavigationTree();
         }
 
         public List<string> RootFolder
