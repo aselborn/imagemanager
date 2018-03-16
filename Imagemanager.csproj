@@ -66,6 +66,7 @@
     <Compile Include="Models\NavigationFolderItem.cs" />
     <Compile Include="Models\INavigationTreeItem.cs" />
     <Compile Include="Models\NavigationFavoritesRootItem.cs" />
+    <Compile Include="Models\NavigationRootNode.cs" />
     <Compile Include="Models\NavigationSpecialFolderRootItem.cs" />
     <Compile Include="Models\NavigationTree.cs" />
     <Compile Include="Models\NavigationTreeItem.cs" />

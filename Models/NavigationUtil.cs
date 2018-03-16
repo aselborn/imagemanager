@@ -12,7 +12,7 @@ namespace Imagemanager.Models
 {
     public static class NavigationUtil
     {
-        public const string LastPartRootItemName = "RootItem";
+        public const string LastPartRootItemName = "DriveRootItem";
         public static NavigationTreeItem GetRootItem(int rootNo, bool includeChildren = false)
         {
             Type selectedType = typeof(NavigationDriveRootItem);
@@ -25,19 +25,19 @@ namespace Imagemanager.Models
                 select t;
 
             int n = 0;
-            foreach (var item in entitypes)
-            {
-                if (item.Name.EndsWith(LastPartRootItemName))
-                {
-                    if (n == rootNo)
-                    {
-                        selectedType = Type.GetType(item.FullName);
-                        selectedName = item.Name.Replace(LastPartRootItemName, "");
-                        break;
-                    }
-                    n++;
-                }
-            }
+            //foreach (var item in entitypes)
+            //{
+            //    if (item.Name.EndsWith(LastPartRootItemName))
+            //    {
+            //        if (n == rootNo)
+            //        {
+            //            selectedType = Type.GetType(item.FullName);
+            //            selectedName = item.Name.Replace(LastPartRootItemName, "");
+            //            break;
+            //        }
+            //        n++;
+            //    }
+            //}
 
             NavigationTreeItem rootItem = (NavigationTreeItem)Activator.CreateInstance(selectedType);
             rootItem.FriendlyName = selectedName;
