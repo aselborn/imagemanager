@@ -55,12 +55,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Lib\FolderUtil.cs" />
     <Compile Include="Lib\IconFromDLL.cs" />
     <Compile Include="Lib\ImageCache.cs" />
-    <Compile Include="Models\DriveRootItem.cs" />
-    <Compile Include="Models\FileItem.cs" />
-    <Compile Include="Models\FolderItem.cs" />
+    <Compile Include="Models\NavigationDriveItem.cs" />
+    <Compile Include="Models\NavigationDriveNoChildItem.cs" />
+    <Compile Include="Models\NavigationDriveNoChildRootItem.cs" />
+    <Compile Include="Models\NavigationDriveRootItem.cs" />
+    <Compile Include="Models\NavigationFileItem.cs" />
+    <Compile Include="Models\NavigationFolderItem.cs" />
     <Compile Include="Models\INavigationTreeItem.cs" />
+    <Compile Include="Models\NavigationFavoritesRootItem.cs" />
+    <Compile Include="Models\NavigationSpecialFolderRootItem.cs" />
     <Compile Include="Models\NavigationTree.cs" />
     <Compile Include="Models\NavigationTreeItem.cs" />
     <Compile Include="Models\NavigationUtil.cs" />

@@ -35,8 +35,8 @@ namespace Imagemanager.Models
             }
         }
 
-        private ObservableCollection<NavigationTreeItem> _rootChildren = new ObservableCollection<NavigationTreeItem>();
-        public ObservableCollection<NavigationTreeItem> RootChildren
+        private ObservableCollection<INavigationTreeItem> _rootChildren = new ObservableCollection<INavigationTreeItem>();
+        public ObservableCollection<INavigationTreeItem> RootChildren
         {
             get => _rootChildren;
             set
@@ -49,17 +49,17 @@ namespace Imagemanager.Models
         public NavigationTree(int pRootNumber = 0, bool pincludeFileChildren = false)
         {
             RootNr = pRootNumber;
-            NavigationTreeItem navigationTreeItem = NavigationUtil.GetRootItem(pRootNumber, pincludeFileChildren);
+            NavigationTreeItem navigationTreeRootItem = NavigationUtil.GetRootItem(pRootNumber, pincludeFileChildren);
 
-            TreeName = navigationTreeItem.FriendlyName;
+            TreeName = navigationTreeRootItem.FriendlyName;
 
-            foreach(NavigationTreeItem item in RootChildren)
+            foreach(INavigationTreeItem item in RootChildren)
             {
                 item.DeleteChildren();
             }
             RootChildren.Clear();
 
-            foreach(NavigationTreeItem item in navigationTreeItem.Children)
+            foreach(INavigationTreeItem item in navigationTreeRootItem.Children)
             {
                 RootChildren.Add(item);
             }

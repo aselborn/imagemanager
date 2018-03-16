@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Imagemanager.Lib;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -9,26 +10,25 @@ using System.Windows.Media.Imaging;
 
 namespace Imagemanager.Models
 {
-    public class DriveRootItem : NavigationTreeItem
+    public class NavigationDriveRootItem : NavigationTreeItem
     {
-        public DriveRootItem()
+        public NavigationDriveRootItem()
         {
             FriendlyName = "DriveRoot";
             IsExpanded = true;
             FullPathName = "$$xxDriveRoot$";
         }
-        public override ObservableCollection<NavigationTreeItem> GetMyChildren()
+        public override ObservableCollection<INavigationTreeItem> GetMyChildren()
         {
-            ObservableCollection<NavigationTreeItem> childrenList = new ObservableCollection<NavigationTreeItem>();
-            //INavigationTreeItem item1;
+            ObservableCollection<INavigationTreeItem> childrenList = new ObservableCollection<INavigationTreeItem>();
+            INavigationTreeItem item;
 
             DriveInfo[] allDrives = DriveInfo.GetDrives();
             foreach (DriveInfo drive in allDrives)
             {
                 if (drive.IsReady)
                 {
-                    NavigationTreeItem item = new DriveRootItem();
-                    NavigationTreeItem sss = new FolderItem();
+                    item = new NavigationDriveRootItem();
 
                     item.FullPathName = NavigationUtil.TrimDriveLetter(drive);
 
@@ -55,7 +55,7 @@ namespace Imagemanager.Models
 
         public override BitmapSource GetMyIcon()
         {
-            throw new NotImplementedException();
+            return _myIcon = ImageCache.GetIconForFile(FullPathName);
         }
     }
 }

@@ -1,20 +1,23 @@
-﻿using System;
+﻿using Imagemanager.Lib;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Imagemanager.Models
 {
-    public class FolderItem : NavigationTreeItem
+    public class NavigationFolderItem : NavigationTreeItem
     {
 
-        public override ObservableCollection<NavigationTreeItem> GetMyChildren()
+        public override ObservableCollection<INavigationTreeItem> GetMyChildren()
         {
 
-            ObservableCollection<NavigationTreeItem> childrenList = new ObservableCollection<NavigationTreeItem>();
+            ObservableCollection<INavigationTreeItem> childrenList = new ObservableCollection<INavigationTreeItem>();
+            INavigationTreeItem item;
 
             try
             {
@@ -22,7 +25,7 @@ namespace Imagemanager.Models
                 if (dirInfo.Exists) return childrenList;
                 foreach (DirectoryInfo di in dirInfo.GetDirectories())
                 {
-                    NavigationTreeItem item = new FolderItem();
+                    item = new NavigationFolderItem();
                     item.FullPathName = FullPathName + "\\" + dirInfo.Name;
                     item.FriendlyName = dirInfo.Name;
                     item.IncludeFileChildren = IncludeFileChildren;
@@ -32,7 +35,11 @@ namespace Imagemanager.Models
                 if (IncludeFileChildren)
                     foreach (FileInfo file in dirInfo.GetFiles())
                     {
-                        NavigationTreeItem fileItem = new FileItem();
+                        NavigationTreeItem fileItem = new NavigationFileItem();
+                        fileItem.FriendlyName = file.Name;
+                        fileItem.FullPathName = file.FullName;
+                        fileItem.IncludeFileChildren = IncludeFileChildren;
+                        childrenList.Add(fileItem);
                     }
 
             }
@@ -40,16 +47,13 @@ namespace Imagemanager.Models
             {
                 Console.WriteLine(e.ToString());
             }
-            {
-
-            }
-
+            
             return childrenList;
         }
 
         public override BitmapSource GetMyIcon()
         {
-            throw new NotImplementedException();
+            return _myIcon = ImageCache.GetIconForFile(FullPathName);
         }
     }
 

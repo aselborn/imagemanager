@@ -15,8 +15,8 @@ namespace Imagemanager.Models
         public const string LastPartRootItemName = "RootItem";
         public static NavigationTreeItem GetRootItem(int rootNo, bool includeChildren = false)
         {
-            Type selectedType = typeof(DriveRootItem);
-            string selectedName = "drive";
+            Type selectedType = typeof(NavigationDriveRootItem);
+            string selectedName = "Drive";
 
             var entitypes =
                 from t in System.Reflection.Assembly.GetAssembly(typeof(NavigationTreeItem)).GetTypes()

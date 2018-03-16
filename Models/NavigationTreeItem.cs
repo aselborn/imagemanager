@@ -12,26 +12,33 @@ namespace Imagemanager.Models
     /*
      * Abstrakt basklass
      */
-    public abstract class NavigationTreeItem : ViewModelBase
+    public abstract class NavigationTreeItem : ViewModelBase, INavigationTreeItem
     {
         public string FriendlyName { get; set; }
+
         protected BitmapSource _myIcon;
         public BitmapSource MyIcon
         {
             get => _myIcon ?? (_myIcon = GetMyIcon());
+            set
+            {
+                _myIcon = value;
+                NotifyPropertyChanged(nameof(MyIcon));
+            }
         }
 
         public abstract BitmapSource GetMyIcon();
+        public abstract ObservableCollection<INavigationTreeItem> GetMyChildren();
 
         public string FullPathName { get; set; }
 
-        private ObservableCollection<NavigationTreeItem> _children;
-        public ObservableCollection<NavigationTreeItem> Children
+        private ObservableCollection<INavigationTreeItem> _children;
+        public ObservableCollection<INavigationTreeItem> Children
         {
             get => _children ?? (_children = GetMyChildren());
         }
 
-        public abstract ObservableCollection<NavigationTreeItem> GetMyChildren();
+        
 
         private bool _isExpanded;
         public bool IsExpanded
@@ -44,6 +51,7 @@ namespace Imagemanager.Models
             }
         }
         public bool IncludeFileChildren { get; set; }
+        
         public void DeleteChildren()
         {
             if (_children != null)
