@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Imagemanager.ViewModels
 {
-    public class RelayCommand
+    public class RelayCommand : ICommand
     {
         readonly Action<object> _execute;
         readonly Predicate<object> _canExecute;

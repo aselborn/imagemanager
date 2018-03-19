@@ -10,7 +10,7 @@
         xmlns:m="clr-namespace:Imagemanager.Models"
         
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="550" Width="600">
+        Title="ImageDuplicates" Height="550" Width="800">
 
     <Window.DataContext>
         <VM:MainWindowViewModel x:Name="MainWindowViewModel"/>
@@ -19,12 +19,10 @@
     <Window.Resources>
         <m:DatabindingDebugConverter x:Key="debugConverter" />
     </Window.Resources>
-
-
-
+    
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -32,52 +30,43 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="5" Orientation="Horizontal">
+        <StackPanel Grid.Row="0" Margin="5" Orientation="Horizontal" Grid.Column="0">
             <Label Content="Selected Path: " FontSize="12"/>
             <TextBlock FontSize="12" Padding="5" Text="{Binding SelectedPath}"/>
         </StackPanel>
 
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="5">
+            <Button Content="Search Duplicates" Grid.Row="0" 
+                    Command="{Binding PerformSearch}"
+                    IsEnabled="{Binding IsAllowed}"
+                    MaxWidth="150"
+                    Grid.Column="1">
+            </Button>
+        </StackPanel>
+
         <wv:MyTreeview Grid.Row="1" DataContext="{Binding SingleTree}" ></wv:MyTreeview>
+        <wv:MyFileControl Grid.Row="1" Grid.Column="1" DataContext="{Binding Files}"></wv:MyFileControl>
 
-
-        <!--<TreeView x:Name="trFolders" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                      Margin="5,5" ItemsSource="{Binding Departments, Converter={StaticResource debugConverter}}" Height="500">
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Positions}" DataType="{x:Type m:Department}">
-                        <Label Content="{Binding DepartmentName}" />
-
-                        <HierarchicalDataTemplate.ItemTemplate>
-                            <HierarchicalDataTemplate ItemsSource="{Binding Employees}" DataType="{x:Type m:Position}">
-
-                                <Label Content="{Binding PositionName}" />
-                                <HierarchicalDataTemplate.ItemTemplate>
-                                    <DataTemplate DataType="{x:Type m:Employee}">
-                                        <Label Content="{Binding EmployeeName}" />
-                                    </DataTemplate>
-                                </HierarchicalDataTemplate.ItemTemplate>
-                            </HierarchicalDataTemplate>
-                        </HierarchicalDataTemplate.ItemTemplate>
-
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>-->
-
-        <!--<TreeView x:Name="trFolders" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                      Margin="5,5" ItemsSource="{Binding ComputerFolders}"   Height="520">
-
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate 
-                        ItemsSource="{Binding FolderInformations, Converter={StaticResource debugConverter}}" 
-                        DataType="{x:Type m:Folder}">
-                        <Label Content="{Binding FolderName}"   />
+        <StatusBar x:Name="sBar" Grid.Row="2" Grid.ColumnSpan="2">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal">
                         
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
+                    </StackPanel>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
 
-            </TreeView>-->
-
+            <StatusBarItem>
+                <Label x:Name="lblStatusBar" Content="Status: "></Label>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="{Binding ProgresStatusText}"></TextBlock>
+            </StatusBarItem>
+            
+        </StatusBar>
 
     </Grid>
 

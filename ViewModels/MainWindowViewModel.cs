@@ -5,65 +5,54 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Imagemanager.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private List<Department> departments;
-        private List<Folder> computerFolders;
 
-        
         public NavigationTree SingleTree { get; set; }
+
+        public ObservableCollection<FileItem> Files { get; set; } = new ObservableCollection<FileItem>();
+
+        private Boolean IsAllowed = false;
+        private Boolean IsBrowse = true;
 
         public MainWindowViewModel()
         {
-            /*
-            Departments = new List<Department>()
-            {
-                new Department("DotNet"),
-                new Department("PHP")
-            };
-
-
-            ComputerFolders = new List<Folder>()
-            {
-                new Folder(@"C:\"),
-                new Folder(@"D:\")
-            };
-            */
-            //ComputerDirectories = DataApi.GetFolders(@"c:\");
-
-
             SingleTree = new NavigationTree();
         }
 
-        public List<string> RootFolder
+        private String _selectedPath;
+        public string SelectedPath
         {
-            get => new FolderRoot().RootFolderName;
-        }
-
-        public List<Department> Departments
-        {
-            get
-            {
-                return departments;
-            }
+            get => _selectedPath;
             set
             {
-                departments = value;
-                NotifyPropertyChanged(nameof(Departments));
+                _selectedPath = value;
+                NotifyPropertyChanged(nameof(SelectedPath));
             }
         }
+        public ICommand OnSelectedPathClick => new RelayCommand(x => OnTreeviewSelected(x), x => IsBrowse);
+        public ICommand PerformSearch => new RelayCommand(p => OnBeginPerformSearch(), p => IsAllowed);
 
-        public List<Folder> ComputerFolders
+        private void OnBeginPerformSearch()
         {
-            get => computerFolders;
-            set
-            {
-                computerFolders = value;
-                NotifyPropertyChanged(nameof(ComputerFolders));
-            }
+            
+        }
+
+        private void OnTreeviewSelected(object x)
+        {
+            SelectedPath = x.ToString();
+            IsAllowed = true;
+            ListFilesInThisDirectory(x.ToString());
+
+        }
+
+        private void ListFilesInThisDirectory(string fullPath)
+        {
+            Files = DataApi.FetchFileItems(fullPath);
         }
     }
 }

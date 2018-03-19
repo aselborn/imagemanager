@@ -11,6 +11,15 @@ namespace Imagemanager.ViewModels
 {
     public class DataApi
     {
+        public static ObservableCollection<FileItem> FetchFileItems(string fullPath)
+        {
+            ObservableCollection<FileItem> files = new ObservableCollection<FileItem>();
+
+            files.Add(new FileItem { FileName = "test.txt", CreatedAt=DateTime.Now, FileSize=93939, Path= "C:\\temp\\" });
+
+
+            return files;
+        }
         public static List<string> GetFolders (string startPath, string searchPattern="*", 
             SearchOption searchOption= SearchOption.TopDirectoryOnly)
         {
@@ -46,14 +55,6 @@ namespace Imagemanager.ViewModels
             }
         }
 
-        private static ObservableCollection<Folder> MyObserv(List<string> list)
-        {
-            ObservableCollection<Folder> result = new ObservableCollection<Folder>();
-            foreach (string dir in list)
-            {
-                result.Add(new Folder(dir));
-            }
-            return result;
-        }
+        
     }
 }
