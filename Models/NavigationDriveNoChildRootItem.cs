@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace Imagemanager.Models
 {
-    class NavigationDriveNoChildRootItem : NavigationTreeItem
+    public class NavigationDriveNoChildRootItem : NavigationTreeItem
     {
         public NavigationDriveNoChildRootItem()
         {

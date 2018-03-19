@@ -22,12 +22,15 @@ namespace Imagemanager.Models
             try
             {
                 DirectoryInfo dirInfo = new DirectoryInfo(FullPathName);
-                if (dirInfo.Exists) return childrenList;
+
+                if (!dirInfo.Exists)
+                    return childrenList;
+
                 foreach (DirectoryInfo di in dirInfo.GetDirectories())
                 {
                     item = new NavigationFolderItem();
-                    item.FullPathName = FullPathName + "\\" + dirInfo.Name;
-                    item.FriendlyName = dirInfo.Name;
+                    item.FullPathName = FullPathName + "\\" + di.Name;
+                    item.FriendlyName = di.Name;
                     item.IncludeFileChildren = IncludeFileChildren;
                     childrenList.Add(item);
                 }

@@ -28,7 +28,7 @@ namespace Imagemanager.Models
             {
                 if (drive.IsReady)
                 {
-                    item = new NavigationDriveRootItem();
+                    item = new NavigationDriveItem();
 
                     item.FullPathName = NavigationUtil.TrimDriveLetter(drive);
 
