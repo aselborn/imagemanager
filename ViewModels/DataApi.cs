@@ -11,15 +11,54 @@ namespace Imagemanager.ViewModels
 {
     public class DataApi
     {
-        public static ObservableCollection<FileItem> FetchFileItems(string fullPath)
+        string _path = "";
+        public DataApi()
         {
-            ObservableCollection<FileItem> files = new ObservableCollection<FileItem>();
 
-            files.Add(new FileItem { FileName = "test.txt", CreatedAt=DateTime.Now, FileSize=93939, Path= "C:\\temp\\" });
-
-
-            return files;
         }
+
+        public DataApi(string fullPath)
+        {
+            _path = fullPath;
+        }
+
+        public string FullPath
+        {
+            get => _path;
+
+            set
+            {
+                _path = value;
+            }
+         }
+
+        public  ObservableCollection<FileItem> FetchFileItems
+        {
+            get
+            {
+                ObservableCollection<FileItem> files = new ObservableCollection<FileItem>();
+                files.Add(new FileItem { FileName = "test.txt", CreatedAt = DateTime.Now, FileSize = 93939, Path = "C:\\temp\\" });
+                return files;
+            }
+            
+        }
+
+        public ObservableCollection<FileItem> FetchDuplicates
+        {
+            get
+            {
+                ObservableCollection<FileItem> duplicates = new ObservableCollection<FileItem>();
+
+                return duplicates;
+            }
+        }
+
+
+        
+
+
+        #region depricated
+        /*
         public static List<string> GetFolders (string startPath, string searchPattern="*", 
             SearchOption searchOption= SearchOption.TopDirectoryOnly)
         {
@@ -54,7 +93,7 @@ namespace Imagemanager.ViewModels
                 return new List<string>();
             }
         }
-
-        
+        */
+#endregion
     }
 }

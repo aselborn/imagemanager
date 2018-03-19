@@ -59,6 +59,7 @@
     <Compile Include="Lib\IconFromDLL.cs" />
     <Compile Include="Lib\ImageCache.cs" />
     <Compile Include="Models\FileItem.cs" />
+    <Compile Include="Models\LongToStringConverter.cs" />
     <Compile Include="Models\NavigationDriveItem.cs" />
     <Compile Include="Models\NavigationDriveNoChildItem.cs" />
     <Compile Include="Models\NavigationDriveNoChildRootItem.cs" />

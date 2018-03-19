@@ -12,12 +12,14 @@ namespace Imagemanager.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
 
+        private DataApi _dataApi = new DataApi();
+
         public NavigationTree SingleTree { get; set; }
+        
+        public ObservableCollection<FileItem> Files { get; } = new ObservableCollection<FileItem>();
 
-        public ObservableCollection<FileItem> Files { get; set; } = new ObservableCollection<FileItem>();
-
-        private Boolean IsAllowed = false;
-        private Boolean IsBrowse = true;
+        public Boolean IsAllowed = false;
+        public Boolean CanBrowse = true;
 
         public MainWindowViewModel()
         {
@@ -34,7 +36,7 @@ namespace Imagemanager.ViewModels
                 NotifyPropertyChanged(nameof(SelectedPath));
             }
         }
-        public ICommand OnSelectedPathClick => new RelayCommand(x => OnTreeviewSelected(x), x => IsBrowse);
+        public ICommand OnSelectedPathClick => new RelayCommand(x => OnTreeviewSelected(x), x => CanBrowse);
         public ICommand PerformSearch => new RelayCommand(p => OnBeginPerformSearch(), p => IsAllowed);
 
         private void OnBeginPerformSearch()
@@ -52,7 +54,8 @@ namespace Imagemanager.ViewModels
 
         private void ListFilesInThisDirectory(string fullPath)
         {
-            Files = DataApi.FetchFileItems(fullPath);
+            _dataApi.FullPath = fullPath;
+            _dataApi.FetchFileItems.ToList().ForEach(Files.Add);
         }
     }
 }

@@ -18,6 +18,7 @@
 
     <Window.Resources>
         <m:DatabindingDebugConverter x:Key="debugConverter" />
+        <m:LongToStringConverter x:Key="lngToString" />
     </Window.Resources>
     
     <Grid>
@@ -48,7 +49,30 @@
         </StackPanel>
 
         <wv:MyTreeview Grid.Row="1" DataContext="{Binding SingleTree}" ></wv:MyTreeview>
-        <wv:MyFileControl Grid.Row="1" Grid.Column="1" DataContext="{Binding Files}"></wv:MyFileControl>
+        <!--<wv:MyFileControl Grid.Row="1" Grid.Column="1" DataContext="{Binding Files}"></wv:MyFileControl>-->
+
+        <DataGrid x:Name="grdFiles" ItemsSource="{Binding Files}" 
+                  Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  SelectionMode="Extended"
+                  CanUserAddRows="False"
+                  
+                  Grid.Column="1" >
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="status" Width="70">
+
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="File" Binding="{Binding FileName}" />
+                <DataGridTextColumn Header="Size" Binding="{Binding FileSize, Converter={StaticResource lngToString }}"  />
+                <DataGridTextColumn Header="Path" Binding="{Binding Path}" />
+                <DataGridTextColumn Header="Created" Binding="{Binding CreatedAt}" />
+
+            </DataGrid.Columns>
+
+
+        </DataGrid>
 
         <StatusBar x:Name="sBar" Grid.Row="2" Grid.ColumnSpan="2">
             <StatusBar.ItemsPanel>
