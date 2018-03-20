@@ -18,9 +18,9 @@ namespace Imagemanager.ViewModels
         
         public ObservableCollection<FileItem> Files { get; } = new ObservableCollection<FileItem>();
 
-        public Boolean IsAllowed = false;
-        public Boolean CanBrowse = true;
-
+        public Boolean IsAllowed = true;
+        //public Boolean CanPerformSearch = false;
+        private string _startPath;
         public MainWindowViewModel()
         {
             SingleTree = new NavigationTree();
@@ -36,12 +36,27 @@ namespace Imagemanager.ViewModels
                 NotifyPropertyChanged(nameof(SelectedPath));
             }
         }
-        public ICommand OnSelectedPathClick => new RelayCommand(x => OnTreeviewSelected(x), x => CanBrowse);
+        public ICommand OnSelectedPathClick => new RelayCommand(x => OnTreeviewSelected(x), x => IsAllowed);
         public ICommand PerformSearch => new RelayCommand(p => OnBeginPerformSearch(), p => IsAllowed);
+
+        public string StartPath
+        {
+            get => _startPath;
+            set
+            {
+                _startPath = "Search: " + value;
+                NotifyPropertyChanged(nameof(StartPath));
+            }
+        }
 
         private void OnBeginPerformSearch()
         {
-            
+
+            StartPath = SelectedPath;
+            Files.Clear();
+
+            _dataApi.FullPath = SelectedPath;
+            _dataApi.FetchFileItems.ToList().ForEach(Files.Add);
         }
 
         private void OnTreeviewSelected(object x)
@@ -54,8 +69,8 @@ namespace Imagemanager.ViewModels
 
         private void ListFilesInThisDirectory(string fullPath)
         {
-            _dataApi.FullPath = fullPath;
-            _dataApi.FetchFileItems.ToList().ForEach(Files.Add);
+            //_dataApi.FullPath = fullPath;
+            //_dataApi.FetchFileItems.ToList().ForEach(Files.Add);
         }
     }
 }

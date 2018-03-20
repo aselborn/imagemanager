@@ -34,9 +34,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.6.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MahApps.Metro.1.6.1\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -58,6 +67,7 @@
     <Compile Include="Lib\FolderUtil.cs" />
     <Compile Include="Lib\IconFromDLL.cs" />
     <Compile Include="Lib\ImageCache.cs" />
+    <Compile Include="Models\Duplicate.cs" />
     <Compile Include="Models\FileItem.cs" />
     <Compile Include="Models\LongToStringConverter.cs" />
     <Compile Include="Models\NavigationDriveItem.cs" />
@@ -73,6 +83,7 @@
     <Compile Include="Models\NavigationTree.cs" />
     <Compile Include="Models\NavigationTreeItem.cs" />
     <Compile Include="Models\NavigationUtil.cs" />
+    <Compile Include="Models\SearchEngine.cs" />
     <Compile Include="Views\MyFileControl.xaml.cs">
       <DependentUpon>MyFileControl.xaml</DependentUpon>
     </Compile>
@@ -80,6 +91,10 @@
       <DependentUpon>MyTreeviewControl.xaml</DependentUpon>
     </Compile>
     <Page Include="MainResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Default.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,6 +142,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

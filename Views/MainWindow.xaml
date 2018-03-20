@@ -1,9 +1,12 @@
-﻿<Window x:Class="Imagemanager.MainWindow"
+﻿<Controls:MetroWindow x:Class="Imagemanager.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Imagemanager"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         xmlns:wv="clr-namespace:Imagemanager.Views"
         xmlns:VM="clr-namespace:Imagemanager.ViewModels"
@@ -42,10 +45,11 @@
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="5">
             <Button Content="Search Duplicates" Grid.Row="0" 
                     Command="{Binding PerformSearch}"
-                    IsEnabled="{Binding IsAllowed}"
+                    IsEnabled="{Binding IsAllowed, Mode=TwoWay}"
                     MaxWidth="150"
                     Grid.Column="1">
             </Button>
+            <TextBlock Margin="5" Text="{Binding StartPath}" />
         </StackPanel>
 
         <wv:MyTreeview Grid.Row="1" DataContext="{Binding SingleTree}" ></wv:MyTreeview>
@@ -97,4 +101,4 @@
 
 
 
-</Window>
+</Controls:MetroWindow>

@@ -10,11 +10,13 @@
 
     <UserControl.Resources>
         <HierarchicalDataTemplate x:Key="NavTreeTemplate" ItemsSource="{Binding Children}">
-            <Button ToolTip="{Binding Path=FullPathName, Mode=OneTime}" 
+            <Button ToolTip="{Binding Path=FullPathName, Mode=OneTime}" x:Name="btnTreeView"
+                    
                     Command="{Binding Path=DataContext.OnSelectedPathClick, 
                     RelativeSource = {RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                   
                     CommandParameter="{Binding FullPathName}"
-        
+                    
                     Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Height="20"
                     Focusable="False" ClickMode="Press">
 
