@@ -16,6 +16,7 @@ namespace Imagemanager.Models
         private long _size;
         private DateTime _createdAt;
         private string _md5CheckSum;
+        private FileInfo _fileInfo;
         public FileItem() { }
         
         public FileItem(string path)
@@ -66,17 +67,43 @@ namespace Imagemanager.Models
 
         public string MD5CheckSum
         {
-            get => _md5CheckSum;
+            get
+            {
+                if (_md5CheckSum == null)
+                {
+                    return CreateCheckSum();
+                }
+                return _md5CheckSum;
+            }
             set
             {
-                using (var md5 = MD5.Create())
+                CreateCheckSum();
+                NotifyPropertyChanged(nameof(MD5CheckSum));
+            }
+        }
+
+        public FileInfo FileInformation
+        {
+            get => _fileInfo;
+            set
+            {
+                _fileInfo = new FileInfo(Path);
+                FileSize = _fileInfo.Length;
+                NotifyPropertyChanged(nameof(FileInformation));
+            }
+        }
+
+        private string CreateCheckSum()
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(Path))
                 {
-                    using (var stream = File.OpenRead(FileName))
-                    {
-                        _md5CheckSum = Encoding.Default.GetString(md5.ComputeHash(stream));
-                    }
+                    _md5CheckSum = Encoding.Default.GetString(md5.ComputeHash(stream));
                 }
             }
+
+            return _md5CheckSum;
         }
     }
 }
