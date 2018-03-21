@@ -17,6 +17,7 @@ namespace Imagemanager.ViewModels
         public NavigationTree SingleTree { get; set; }
         
         public ObservableCollection<FileItem> Files { get; } = new ObservableCollection<FileItem>();
+        private string _progresStatusText = "";
 
         public Boolean IsAllowed = true;
         //public Boolean CanPerformSearch = false;
@@ -49,6 +50,16 @@ namespace Imagemanager.ViewModels
             }
         }
 
+        public string ProgresStatusText
+        {
+            get => _progresStatusText;
+            set
+            {
+                _progresStatusText = value;
+                NotifyPropertyChanged(nameof(ProgresStatusText));
+            }
+        }
+
         private void OnBeginPerformSearch()
         {
 
@@ -57,6 +68,7 @@ namespace Imagemanager.ViewModels
 
             _dataApi.FullPath = SelectedPath;
             _dataApi.FetchFileItems.ToList().ForEach(Files.Add);
+            ProgresStatusText = "Found " + Files.Count.ToString() + " duplicate files.";
         }
 
         private void OnTreeviewSelected(object x)

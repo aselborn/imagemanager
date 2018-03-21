@@ -7,30 +7,15 @@ using System.Threading.Tasks;
 
 namespace Imagemanager.Models
 {
-    class Duplicate
+    public class Duplicate : FileItem
     {
 
-        private List<FileItem> _duplicates;
-        public List<FileItem> Duplicates => _duplicates;
+        //public List<string> DuplicatePaths { get; } = new List<string>();
 
-        public Duplicate(FileItem item, FileItem copy)
-        {
-            if (_duplicates == null) _duplicates = new List<FileItem>();
-
-
-            if (_duplicates.Find(p => p.MD5CheckSum == item.MD5CheckSum) == null)
-                _duplicates.Add(item);
-
-
-            _duplicates.Add(copy);
-
-
-        }
-
-
-
-
-
+        public Duplicate(string duplicatePath) : base(duplicatePath) { }
+        
+            //DuplicatePaths.Add(duplicatePath);
+        
 
     }
 }

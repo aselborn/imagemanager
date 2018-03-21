@@ -22,6 +22,12 @@ namespace Imagemanager.Models
         public FileItem(string path)
         {
             Path = path;
+            FileInformation = new FileInfo(path);
+            FileName = FileInformation.Name;
+            FileSize = FileInformation.Length;
+            CreatedAt = FileInformation.LastWriteTime;
+            MD5CheckSum = FileInformation.FullName;
+
         }
         
 
@@ -95,11 +101,14 @@ namespace Imagemanager.Models
 
         private string CreateCheckSum()
         {
+            
             using (var md5 = MD5.Create())
             {
+                
                 using (var stream = File.OpenRead(Path))
                 {
-                    _md5CheckSum = Encoding.Default.GetString(md5.ComputeHash(stream));
+                    var hash = md5.ComputeHash(stream);
+                    _md5CheckSum =  BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
                 }
             }
 

@@ -70,6 +70,7 @@
 
                 <DataGridTextColumn Header="File" Binding="{Binding FileName}" />
                 <DataGridTextColumn Header="Size" Binding="{Binding FileSize, Converter={StaticResource lngToString }}"  />
+                <DataGridTextColumn Header="MD5" Binding="{Binding MD5CheckSum}" />
                 <DataGridTextColumn Header="Path" Binding="{Binding Path}" />
                 <DataGridTextColumn Header="Created" Binding="{Binding CreatedAt}" />
 

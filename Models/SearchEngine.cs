@@ -11,21 +11,21 @@ namespace Imagemanager.Models
     {
         string _startPath = "";
         private List<FileItem> _filesList = new List<FileItem>();
-        private Duplicate _duplicate;
+        private List<Duplicate> _duplicates = new List<Duplicate>();
         public SearchEngine(string startPath)
         {
             _startPath = startPath;
         }
 
-        public void SearchForDuplicates()
+        public List<Duplicate> SearchForDuplicates()
         {
             DirectoryInfo[] dirs = new DirectoryInfo(_startPath).GetDirectories("*", SearchOption.AllDirectories);
 
             SearchFolderForDuplicates(new DirectoryInfo(_startPath));
-
             foreach (DirectoryInfo d in dirs)
                 SearchFolderForDuplicates(d);
 
+            return _duplicates;
         }
 
 
@@ -40,8 +40,7 @@ namespace Imagemanager.Models
                     if (_filesList.Count != 0)
                     {
                         FileItem alreadyExists = null;
-                        //alreadyExists = _filesList.FirstOrDefault(p => (p.FileName == f.Name && p.FileSize == f.Length));
-
+                        
                         alreadyExists = _filesList.Find(p => p.FileSize == f.Length);
 
                         if (alreadyExists != null)
@@ -49,11 +48,11 @@ namespace Imagemanager.Models
                             if (alreadyExists.MD5CheckSum.CompareTo(new FileItem(f.FullName).MD5CheckSum) == 0)
                             {
                                 //We have a duplicate!
-                                if (_duplicate == null)
-                                {
-                                    _duplicate = new Duplicate(new FileItem(f.FullName), alreadyExists);
-                                }
-                               
+                                _duplicates.Add(new Duplicate(alreadyExists.Path));
+                                _duplicates.Add(new Duplicate(f.FullName));
+
+
+
                             }
                         }
                         else
@@ -70,16 +69,16 @@ namespace Imagemanager.Models
                 }
             }
 
-            catch { }
+            catch (Exception ep)
+            {
+                Console.WriteLine(ep.ToString());
+            }
 
         }
 
         private void AddFile(string path)
         {
-            _filesList.Add(new FileItem(path)
-            {
-                FileInformation = new FileInfo(path)
-            });
+            _filesList.Add(new FileItem(path));
         }
 
     }

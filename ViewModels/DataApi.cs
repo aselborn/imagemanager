@@ -37,11 +37,16 @@ namespace Imagemanager.ViewModels
             get
             {
 
-                SearchEngine searchEngine = new SearchEngine(FullPath);
-                searchEngine.SearchForDuplicates();
-
                 ObservableCollection<FileItem> files = new ObservableCollection<FileItem>();
-                files.Add(new FileItem { FileName = "test.txt", CreatedAt = DateTime.Now, FileSize = 93939, Path = "C:\\temp\\" });
+
+                SearchEngine searchEngine = new SearchEngine(FullPath);
+                List<Duplicate> duplicates = searchEngine.SearchForDuplicates();
+
+                foreach ( Duplicate dup in duplicates)
+                {
+                    files.Add(dup);
+                }
+                
                 return files;
             }
             
