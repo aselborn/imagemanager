@@ -75,14 +75,10 @@ namespace Imagemanager.ViewModels
         {
             SelectedPath = x.ToString();
             IsAllowed = true;
-            ListFilesInThisDirectory(x.ToString());
+          
 
         }
 
-        private void ListFilesInThisDirectory(string fullPath)
-        {
-            //_dataApi.FullPath = fullPath;
-            //_dataApi.FetchFileItems.ToList().ForEach(Files.Add);
-        }
+      
     }
 }

@@ -13,7 +13,7 @@
         xmlns:m="clr-namespace:Imagemanager.Models"
         
         WindowStartupLocation="CenterScreen"
-        Title="ImageDuplicates" Height="550" Width="800">
+        Title="{StaticResource s_title}" Height="550" Width="800">
 
     <Window.DataContext>
         <VM:MainWindowViewModel x:Name="MainWindowViewModel"/>
@@ -23,8 +23,70 @@
         <m:DatabindingDebugConverter x:Key="debugConverter" />
         <m:LongToStringConverter x:Key="lngToString" />
     </Window.Resources>
-    
+
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <ToggleButton  IsChecked="{Binding ElementName=MyFlyOut, Path=IsOpen}" Cursor="Hand">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill"  Visual="{StaticResource appbar_settings}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="4,0,0,0" VerticalAlignment="Center" Text="{StaticResource s_settings}" />
+
+                </StackPanel>
+            </ToggleButton>
+
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout x:Name="MyFlyOut" Header="{StaticResource s_settings}" Position="Right" IsOpen="{Binding IsOpenSettings}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <StackPanel.Resources>
+                            <Style TargetType="CheckBox">
+                                <Setter Property="Margin" Value="8,5" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Style>
+                        </StackPanel.Resources>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{StaticResource s_column}" FontSize="14"
+                                       Margin="8,10" />
+
+                            <ListBox ItemsSource="{Binding Columns}" Height="200">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <CheckBox Margin="0" IsChecked="{Binding SelectedColumn}" />
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            
+                        </Grid>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Controls:Flyout>
+            
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
+
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
@@ -83,7 +145,7 @@
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal">
-                        
+
                     </StackPanel>
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
@@ -94,7 +156,7 @@
             <StatusBarItem>
                 <TextBlock Text="{Binding ProgresStatusText}"></TextBlock>
             </StatusBarItem>
-            
+
         </StatusBar>
 
     </Grid>

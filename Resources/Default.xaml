@@ -10,6 +10,9 @@
         <!--Default Accent setting-->
         <!--Do NOT apply Theme over here. it should be loaded on basis of command line from code-->
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+
+        <ResourceDictionary Source="SharedXMLs.xaml" />
+
     </ResourceDictionary.MergedDictionaries>
     
 </ResourceDictionary>

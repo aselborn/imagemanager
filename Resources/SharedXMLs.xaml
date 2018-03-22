@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Imagemanager.Resources">
+
+    <!--Points to static resources.-->
+    
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="SharedLanguage.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+</ResourceDictionary>

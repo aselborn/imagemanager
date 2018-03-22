@@ -19,6 +19,9 @@ namespace Imagemanager.Models
 
         public List<Duplicate> SearchForDuplicates()
         {
+            if (!_startPath.Contains("\\"))
+                _startPath = _startPath + "\\";
+                
             DirectoryInfo[] dirs = new DirectoryInfo(_startPath).GetDirectories("*", SearchOption.AllDirectories);
 
             SearchFolderForDuplicates(new DirectoryInfo(_startPath));
