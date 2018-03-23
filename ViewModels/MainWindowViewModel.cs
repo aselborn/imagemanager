@@ -1,4 +1,5 @@
-﻿using Imagemanager.Models;
+﻿using Imagemanager.Lib;
+using Imagemanager.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,9 +23,23 @@ namespace Imagemanager.ViewModels
         public Boolean IsAllowed = true;
         //public Boolean CanPerformSearch = false;
         private string _startPath;
+        public string SelectedColumns { get; set; }
+
+        public List<ColumnNames> FileColumns { get; } = ColumnNames.GetColumnNames();
         public MainWindowViewModel()
         {
+
+            Messenger.Register<ColumnNames>(this, p =>
+            {
+                SelectedColumns = string.Join(",", FileColumns.Where(c => c.IsSelected).Select(c => c.Name));
+            });
+            
+
+            NotifyPropertyChanged(nameof(FileColumns));
+
             SingleTree = new NavigationTree();
+
+
         }
 
         private String _selectedPath;

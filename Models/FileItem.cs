@@ -30,7 +30,7 @@ namespace Imagemanager.Models
 
         }
         
-
+        
         public String FileName
         {
             get => _fileName;

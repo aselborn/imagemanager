@@ -67,6 +67,7 @@
     <Compile Include="Lib\FolderUtil.cs" />
     <Compile Include="Lib\IconFromDLL.cs" />
     <Compile Include="Lib\ImageCache.cs" />
+    <Compile Include="Lib\Messenger.cs" />
     <Compile Include="Models\ColumnNames.cs" />
     <Compile Include="Models\Duplicate.cs" />
     <Compile Include="Models\FileItem.cs" />
