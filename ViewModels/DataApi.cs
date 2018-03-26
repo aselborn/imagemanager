@@ -14,13 +14,7 @@ namespace Imagemanager.ViewModels
         string _path = "";
         private SearchEngine _searchEngine;
 
-      
-        /*
-        public DataApi(string fullPath)
-        {
-            _path = fullPath;
-        }
-        */
+     
         public DataApi(SearchEngine mySearchEngine)
         {
             _searchEngine = mySearchEngine;
