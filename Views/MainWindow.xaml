@@ -156,6 +156,14 @@
             <StatusBarItem>
                 <TextBlock Text="{Binding ProgresStatusText}"></TextBlock>
             </StatusBarItem>
+            <StatusBarItem>
+                <!--<Label Content="{Binding DuplicateCount}"></Label>-->
+
+                <Label x:Name="lblFoundCount" Content="{Binding DuplicateCount}" >
+                   
+                </Label>
+                
+            </StatusBarItem>
 
         </StatusBar>
 

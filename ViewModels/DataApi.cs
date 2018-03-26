@@ -12,16 +12,20 @@ namespace Imagemanager.ViewModels
     public class DataApi
     {
         string _path = "";
-        public DataApi()
-        {
+        private SearchEngine _searchEngine;
 
-        }
-
+      
+        /*
         public DataApi(string fullPath)
         {
             _path = fullPath;
         }
-
+        */
+        public DataApi(SearchEngine mySearchEngine)
+        {
+            _searchEngine = mySearchEngine;
+            FullPath = _searchEngine.GetStartPath;
+        }
         public string FullPath
         {
             get => _path;
@@ -30,26 +34,62 @@ namespace Imagemanager.ViewModels
             {
                 _path = value;
             }
-         }
+        }
 
-        public  ObservableCollection<FileItem> FetchFileItems
+        public ObservableCollection<FileItem> FetchFileItems
         {
             get
             {
-
                 ObservableCollection<FileItem> files = new ObservableCollection<FileItem>();
 
-                SearchEngine searchEngine = new SearchEngine(FullPath);
-                List<Duplicate> duplicates = searchEngine.SearchForDuplicates();
+                var TaskResult = Task.Factory.StartNew(() => GetList()).Result;
+                TaskResult.Result.ForEach(files.Add);
 
-                foreach ( Duplicate dup in duplicates)
-                {
-                    files.Add(dup);
-                }
-                
                 return files;
             }
-            
+
+        }
+
+        
+
+        private List<Duplicate> SearchResultList()
+        {
+            SearchEngine searchEngine = new SearchEngine(FullPath);
+            return searchEngine.SearchForDuplicates();
+        }
+
+        private async void PerformSearch2()
+        {
+            SearchEngine searchEngine = new SearchEngine(FullPath);
+            await Task.Run(() =>
+           {
+               searchEngine.SearchForDuplicates();
+           });
+        }
+
+        private async Task PerformSearch()
+        {
+            Func<List<Duplicate>> function = new Func<List<Duplicate>>(() => SearchResultList());
+            List<Duplicate> dpl = await Task.Factory.StartNew<List<Duplicate>>(function);
+
+        }
+
+
+        public async Task<List<Duplicate>> GetList()
+        {
+            //SearchEngine searchEngine = new SearchEngine(FullPath);            
+            //return await Task.FromResult<List<Duplicate>>(searchEngine.SearchForDuplicates());
+            return await Task.FromResult<List<Duplicate>>(_searchEngine.SearchForDuplicates());
+        }
+
+        private string EventOnHitCount(long hitCount)
+        {
+            return String.Format("Finding, {0}", hitCount);
+        }
+
+        private void reportFinnished(Task<List<Duplicate>> obj)
+        {
+            string s = ";";
         }
 
         public ObservableCollection<FileItem> FetchDuplicates
@@ -63,7 +103,7 @@ namespace Imagemanager.ViewModels
         }
 
 
-        
+
 
 
         #region depricated
@@ -103,6 +143,6 @@ namespace Imagemanager.ViewModels
             }
         }
         */
-#endregion
+        #endregion
     }
 }

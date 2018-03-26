@@ -12,25 +12,61 @@ namespace Imagemanager.Models
         string _startPath = "";
         private List<FileItem> _filesList = new List<FileItem>();
         private List<Duplicate> _duplicates = new List<Duplicate>();
+
+        public delegate void dlgProgress(long hitCount);
+        public event dlgProgress OnReportProgressEvent;
+
+        private long searchCount = 0L;
+
         public SearchEngine(string startPath)
         {
             _startPath = startPath;
         }
 
+        public string GetStartPath => _startPath;
+
         public List<Duplicate> SearchForDuplicates()
         {
+            
             if (!_startPath.Contains("\\"))
                 _startPath = _startPath + "\\";
-                
-            DirectoryInfo[] dirs = new DirectoryInfo(_startPath).GetDirectories("*", SearchOption.AllDirectories);
+
+            List<DirectoryInfo> myDirs = AccessableDirectories();
 
             SearchFolderForDuplicates(new DirectoryInfo(_startPath));
-            foreach (DirectoryInfo d in dirs)
+            foreach (DirectoryInfo d in myDirs)
                 SearchFolderForDuplicates(d);
 
             return _duplicates;
         }
 
+
+        private List<DirectoryInfo> AccessableDirectories()
+        {
+            List<DirectoryInfo> dirs = new List<DirectoryInfo>();
+
+            try
+            {
+                IEnumerable<string> strdirs = Directory.EnumerateDirectories(_startPath);
+
+                foreach(string s in strdirs)
+                {
+                    dirs.Add(new DirectoryInfo(s));
+                }
+
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                string p = ";";
+            }
+
+            catch(Exception e)
+            {
+                string error = e.ToString();
+            }
+
+            return dirs;
+        }
 
         private void SearchFolderForDuplicates(DirectoryInfo dirInf)
         {
@@ -43,7 +79,7 @@ namespace Imagemanager.Models
                     if (_filesList.Count != 0)
                     {
                         FileItem alreadyExists = null;
-                        
+
                         alreadyExists = _filesList.Find(p => p.FileSize == f.Length);
 
                         if (alreadyExists != null)
@@ -54,8 +90,8 @@ namespace Imagemanager.Models
                                 _duplicates.Add(new Duplicate(alreadyExists.Path));
                                 _duplicates.Add(new Duplicate(f.FullName));
 
-
-
+                                searchCount++;
+                                OnReportProgressEvent(searchCount);
                             }
                         }
                         else
